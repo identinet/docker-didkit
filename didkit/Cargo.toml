@@ -1,0 +1,50 @@
+[workspace]
+members = [
+  # From ./didkit/Cargo.toml
+  "didkit/http",
+  "didkit/cli",
+  "didkit/lib",
+  "didkit/lib/cbindings",
+  "didkit/lib/web",
+
+  # From ./ssi/Cargo.toml
+  # "ssi/did-tezos",
+  # "ssi/did-jwk",
+  # "ssi/did-key",
+  # "ssi/did-web",
+  # "ssi/did-ethr",
+  # "ssi/did-sol",
+  # "ssi/did-pkh",
+  # "ssi/did-onion",
+  # "ssi/did-ion",
+  # "ssi/did-webkey",
+  # "ssi/vc-test",
+  # "ssi/did-test",
+  # "ssi/ssi-caips",
+  # "ssi/ssi-jwk",
+  # "ssi/ssi-core",
+  # "ssi/ssi-crypto",
+  # "ssi/ssi-json-ld",
+  # "ssi/ssi-dids",
+  # "ssi/ssi-jws",
+  # "ssi/ssi-jwt",
+  # "ssi/ssi-sd-jwt",
+  # "ssi/ssi-tzkey",
+  # "ssi/ssi-ssh",
+  # "ssi/ssi-ldp",
+  # "ssi/ssi-ucan",
+  # "ssi/ssi-vc",
+  # "ssi/ssi-zcap-ld",
+]
+default-members = [
+  # "didkit/http",
+  "didkit/cli",
+  # "didkit/lib",
+  # "didkit/lib/cbindings",
+  # "didkit/lib/web",
+]
+exclude = [
+  # "didkit",
+  "ssi",
+]
+resolver = "2"

@@ -1,0 +1,6 @@
+[submodule "didkit/didkit"]
+	path = didkit/didkit
+	url = https://github.com/identinet/didkit.git
+[submodule "didkit/ssi"]
+	path = didkit/ssi
+	url = https://github.com/identinet/ssi.git

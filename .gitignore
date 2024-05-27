@@ -1,0 +1,4 @@
+*.bak
+/.direnv/
+/didkit/target/
+result
