@@ -109,7 +109,7 @@ release LEVEL="patch" NEW_VERSION="":
     git cliff --strip all -u -t $new_version
     input -s $"Version will be bumped from ($current_version) to ($new_version)\nPress enter to confirm.\n"
     open manifest.json | upsert version $new_version | save _manifest.json; mv _manifest.json manifest.json; git add manifest.json
-    open README.md | str replace $current_version $new_version | save _README.md; mv _README.md README.md; git add README.md
+    open README.md | str replace -a $current_version $new_version | save _README.md; mv _README.md README.md; git add README.md
     git cliff -t $new_version -o CHANGELOG.md; git add CHANGELOG.md
     git commit -n -m $"Release version ($new_version)"
     just build
