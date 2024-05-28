@@ -82,12 +82,10 @@
             # Valid values, see: https://github.com/moby/docker-image-spec
             # and https://oci-playground.github.io/specs-latest/
             "ExposedPorts" = { };
-            Entrypoint = [
-              "${didkit_pkg}/bin/didkit"
-            ];
+            Entrypoint = [ "${didkit_pkg}/bin/didkit" ];
             Cmd = [ ];
             # Env = ["VARNAME=xxx"];
-            WorkingDir = "/";
+            WorkingDir = "/run/didkit";
             # User 'nobody' and group 'nogroup'
             User = "65534";
             Group = "65534";
