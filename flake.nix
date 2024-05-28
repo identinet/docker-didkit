@@ -13,7 +13,7 @@
         pkgs = nixpkgs.legacyPackages.${system};
         unstable = nixpkgs-unstable.legacyPackages.${system};
         didkit_pkg = unstable.callPackage ./didkit/default.nix { };
-        image = pkgs.lib.importJSON ./image.json;
+        manifest = pkgs.lib.importJSON ./manifest.json;
         pkgVersionsEqual = x: y:
           let
             attempt = builtins.tryEval
@@ -25,12 +25,12 @@
           # Version can be bumped in the prerelease or build version to create a
           # custom local revision, see https://semver.org/
             abort "Version mismatch: ${y} doesn't start with ${x}";
-        version = pkgVersionsEqual "${didkit_pkg.version}" image.version;
+        version = pkgVersionsEqual "${didkit_pkg.version}" manifest.version;
       in
       with pkgs; rec {
         # Development environment: nix develop
         devShells.default = mkShell {
-          name = image.name;
+          name = manifest.name;
           nativeBuildInputs = [
             just
             skopeo
@@ -47,7 +47,7 @@
 
         packages.docker = pkgs.dockerTools.streamLayeredImage {
           # Documentation: https://ryantm.github.io/nixpkgs/builders/images/dockertools/
-          name = "${image.registry}/${image.name}";
+          name = "${manifest.registry}/${manifest.name}";
           tag = version;
           # created = "now";
           # author = "not yet supported";
@@ -70,14 +70,14 @@
             didkit_pkg
             # entrypoint
           ];
-          # enableFakechroot = true;
-          # fakeRootCommands = ''
-          #   set -exuo pipefail
-          #   mkdir -p /run/didkit
-          #   chown 65534:65534 /run/didkit
-          #   # mkdir /tmp
-          #   # chmod 1777 /tmp
-          # '';
+          enableFakechroot = true;
+          fakeRootCommands = ''
+            set -exuo pipefail
+            mkdir -p /run/didkit
+            # chown 65534:65534 /run/didkit
+            # mkdir /tmp
+            # chmod 1777 /tmp
+          '';
           config = {
             # Valid values, see: https://github.com/moby/docker-image-spec
             # and https://oci-playground.github.io/specs-latest/
@@ -94,16 +94,16 @@
             Labels = {
               # Well-known annotations: https://github.com/opencontainers/image-spec/blob/main/annotations.md
               "org.opencontainers.image.authors" =
-                builtins.elemAt image.contributors 0;
-              "org.opencontainers.image.vendor" = image.author;
-              "org.opencontainers.image.description" = image.description;
-              "org.opencontainers.image.source" = image.repository.url;
-              "org.opencontainers.image.url" = image.homepage;
-              "org.opencontainers.image.licenses" = image.license;
+                builtins.elemAt manifest.contributors 0;
+              "org.opencontainers.image.vendor" = manifest.author;
+              "org.opencontainers.image.description" = manifest.description;
+              "org.opencontainers.image.source" = manifest.repository.url;
+              "org.opencontainers.image.url" = manifest.homepage;
+              "org.opencontainers.image.licenses" = manifest.license;
               "org.opencontainers.image.base.name" =
-                "${image.repository.url}/${image.name}:${image.version}";
-              "org.opencontainers.image.version" = image.version;
-              "org.opencontainers.image.ref.name" = image.name;
+                "${manifest.repository.url}/${manifest.name}:${manifest.version}";
+              "org.opencontainers.image.version" = manifest.version;
+              "org.opencontainers.image.ref.name" = manifest.name;
             };
           };
         };

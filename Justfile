@@ -3,11 +3,6 @@
 
 set shell := ['nu', '-c']
 
-# Integration with nodejs package.json scripts, see https://just.systems/man/en/chapter_65.html
-# export PATH := env('PWD') / 'node_modules/.bin:' + env('PATH')
-# To override the value of SOME_VERSION, run: just --set SOME_VERSION 1.2.4 TARGET_NAME
-# SOME_VERSION := '1.2.3'
-
 # Print this help
 default:
     @just -l
@@ -47,8 +42,8 @@ update:
 # Build image
 build: githooks
     #!/usr/bin/env nu
-    let image = (open image.json)
-    let image = $"($image.registry)/($image.name):($image.version)"
+    let manifest = (open manifest.json)
+    let image = $"($manifest.registry)/($manifest.name):($manifest.version)"
     print -e $"Building image ($image)"
     # If the Cargo.lock file doesn't exist, create it. It's required for the Nix build to work
     if not ("./didkit/didkit/Cargo.lock" | path exists) {
@@ -66,32 +61,33 @@ load: build
 # Run image locally
 run: load
     #!/usr/bin/env nu
-    let image = (open image.json)
-    let image_tag = $"($image.registry)/($image.name):($image.version)"
-    docker run --name $image.name -it --rm $image_tag
+    let manifest = (open manifest.json)
+    let image = $"($manifest.registry)/($manifest.name):($manifest.version)"
+    docker run --name $manifest.name -it --rm $image
 
 # Run shell image locally
 run-sh: load
     #!/usr/bin/env nu
-    let image = (open image.json)
-    let image_tag = $"($image.registry)/($image.name):($image.version)"
-    docker run --name $image.name -it --rm --entrypoint /bin/sh $image_tag --
+    let manifest = (open manifest.json)
+    let image = $"($manifest.registry)/($manifest.name):($manifest.version)"
+    docker run --name $manifest.name -it --rm --entrypoint /bin/sh $image --
 
 # Inspect image
 inspect: build
     #!/usr/bin/env nu
-    let image = (open image.json)
-    let image_tag = {
-      RepoTags: [$"($image.registry)/($image.name):($image.version)"],
+    let manifest = (open manifest.json)
+    let image = {
+      RepoTags: [$"($manifest.registry)/($manifest.name):($manifest.version)"],
     }
-    ./result | skopeo inspect --config docker-archive:/dev/stdin  | from json | merge $image_tag
+    ./result | skopeo inspect --config docker-archive:/dev/stdin  | from json | merge $image
 
 # Push image
 push:
     #!/usr/bin/env nu
-    let image = (open image.json)
-    let image_tag = $"($image.registry)/($image.name):($image.version)"
-    ./result | skopeo copy docker-archive:/dev/stdin $"docker://($image_tag)"
+    let manifest = (open manifest.json)
+    let image = $"($manifest.registry)/($manifest.name)"
+    ./result | skopeo copy docker-archive:/dev/stdin $"docker://($manifest):($manifest.version)"
+    ./result | skopeo copy docker-archive:/dev/stdin $"docker://($manifest):latest"
 
 # Create a new release of this module. LEVEL can be one of: major, minor, patch, premajor, preminor, prepatch, or prerelease.
 release LEVEL="patch" NEW_VERSION="":
@@ -105,14 +101,15 @@ release LEVEL="patch" NEW_VERSION="":
       exit 1
     }
     # str replace -r "-.*" "" - strips git's automatic prerelease version
-    let image = (open image.json)
+    let manifest = (open manifest.json)
     # let current_version = (git describe | str replace -r "-.*" "" | deno run npm:semver $in)
-    let current_version = ($image.version |  deno run npm:semver $in)
+    let current_version = ($manifest.version |  deno run npm:semver $in)
     let new_version = if "{{ NEW_VERSION }}" == "" {$current_version | deno run npm:semver -i "{{ LEVEL }}" $in | lines | get 0} else {"{{ NEW_VERSION }}"}
     print "\nChangelog:\n"
     git cliff --strip all -u -t $new_version
     input -s $"Version will be bumped from ($current_version) to ($new_version)\nPress enter to confirm.\n"
-    open image.json | upsert version $new_version | save -f image.json; git add image.json
+    open manifest.json | upsert version $new_version | save -f manifest.json; git add manifest.json
+    open README.md | str replace $current_version $new_version | save -f README.md; git add README.md
     git cliff -t $new_version -o CHANGELOG.md; git add CHANGELOG.md
     git commit -n -m $"Release version ($new_version)"
     just build
