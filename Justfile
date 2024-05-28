@@ -86,8 +86,8 @@ push:
     #!/usr/bin/env nu
     let manifest = (open manifest.json)
     let image = $"($manifest.registry)/($manifest.name)"
-    ./result | skopeo copy docker-archive:/dev/stdin $"docker://($manifest):($manifest.version)"
-    ./result | skopeo copy docker-archive:/dev/stdin $"docker://($manifest):latest"
+    ./result | skopeo copy docker-archive:/dev/stdin $"docker://($image):($manifest.version)"
+    ./result | skopeo copy docker-archive:/dev/stdin $"docker://($image):latest"
 
 # Create a new release of this module. LEVEL can be one of: major, minor, patch, premajor, preminor, prepatch, or prerelease.
 release LEVEL="patch" NEW_VERSION="":
