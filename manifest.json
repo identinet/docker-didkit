@@ -1,15 +1,17 @@
 {
   "name": "didkit-cli",
-  "version": "0.3.2-0",
+  "version": "0.3.2-1",
   "registry": "docker.io/identinet",
   "description": "Core library for Verifiable Credentials and Decentralized Identifiers.",
   "author": "identinet GmbH <support@identinet.io>",
-  "contributors": [
+  "contributors":
+  [
     "Jan Christoph Ebersbach <jan-christoph.ebersbach@identinet.io>"
   ],
   "homepage": "https://github.com/identinet/docker-didkit",
   "license": "Apache 2.0",
-  "repository": {
+  "repository":
+  {
     "type": "git",
     "url": "https://github.com/identinet/docker-didkit"
   }
