@@ -43,7 +43,7 @@ update:
 build: githooks
     #!/usr/bin/env nu
     let manifest = (open manifest.json)
-    let image = $"($manifest.registry)/($manifest.name):($manifest.version)"
+    let image = $"($manifest.registry.name)/($manifest.name):($manifest.version)"
     print -e $"Building image ($image)"
     # If the Cargo.lock file doesn't exist, create it. It's required for the Nix build to work
     if not ("./didkit/didkit/Cargo.lock" | path exists) {
@@ -62,14 +62,14 @@ load: build
 run: load
     #!/usr/bin/env nu
     let manifest = (open manifest.json)
-    let image = $"($manifest.registry)/($manifest.name):($manifest.version)"
+    let image = $"($manifest.registry.name)/($manifest.name):($manifest.version)"
     docker run --name $manifest.name -it --rm $image
 
 # Run shell image locally
 run-sh: load
     #!/usr/bin/env nu
     let manifest = (open manifest.json)
-    let image = $"($manifest.registry)/($manifest.name):($manifest.version)"
+    let image = $"($manifest.registry.name)/($manifest.name):($manifest.version)"
     docker run --name $manifest.name -it --rm --entrypoint /bin/sh $image --
 
 # Inspect image
@@ -77,7 +77,7 @@ inspect: build
     #!/usr/bin/env nu
     let manifest = (open manifest.json)
     let image = {
-      RepoTags: [$"($manifest.registry)/($manifest.name):($manifest.version)"],
+      RepoTags: [$"($manifest.registry.name)/($manifest.name):($manifest.version)"],
     }
     ./result | skopeo inspect --config docker-archive:/dev/stdin  | from json | merge $image
 
@@ -85,7 +85,7 @@ inspect: build
 push:
     #!/usr/bin/env nu
     let manifest = (open manifest.json)
-    let image = $"($manifest.registry)/($manifest.name)"
+    let image = $"($manifest.registry.name)/($manifest.name)"
     ./result | skopeo copy docker-archive:/dev/stdin $"docker://($image):($manifest.version)"
     ./result | skopeo copy docker-archive:/dev/stdin $"docker://($image):latest"
 

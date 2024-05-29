@@ -47,7 +47,7 @@
 
         packages.docker = pkgs.dockerTools.streamLayeredImage {
           # Documentation: https://ryantm.github.io/nixpkgs/builders/images/dockertools/
-          name = "${manifest.registry}/${manifest.name}";
+          name = "${manifest.registry.name}/${manifest.name}";
           tag = version;
           # created = "now";
           # author = "not yet supported";
@@ -91,17 +91,18 @@
             Group = "65534";
             Labels = {
               # Well-known annotations: https://github.com/opencontainers/image-spec/blob/main/annotations.md
+              "org.opencontainers.image.ref.name" = "${manifest.name}:${manifest.version}";
+              "org.opencontainers.image.licenses" = manifest.license;
+              "org.opencontainers.image.description" = manifest.description;
+              "org.opencontainers.image.documentation" = manifest.registry.url;
+              "org.opencontainers.image.version" = manifest.version;
+              "org.opencontainers.image.vendor" = manifest.author;
               "org.opencontainers.image.authors" =
                 builtins.elemAt manifest.contributors 0;
-              "org.opencontainers.image.vendor" = manifest.author;
-              "org.opencontainers.image.description" = manifest.description;
-              "org.opencontainers.image.source" = manifest.repository.url;
               "org.opencontainers.image.url" = manifest.homepage;
-              "org.opencontainers.image.licenses" = manifest.license;
-              "org.opencontainers.image.base.name" =
-                "${manifest.repository.url}/${manifest.name}:${manifest.version}";
-              "org.opencontainers.image.version" = manifest.version;
-              "org.opencontainers.image.ref.name" = manifest.name;
+              "org.opencontainers.image.source" = manifest.repository.url;
+              # "org.opencontainers.image.base.name" =
+              #   "${manifest.registry.url}/${manifest.name}/${manifest.version}";
             };
           };
         };
