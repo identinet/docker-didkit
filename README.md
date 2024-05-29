@@ -7,13 +7,13 @@ Provides a [docker image](https://hub.docker.com/repository/docker/identinet/did
 Run the docker container with the following command and pass parameters to `didkit`:
 
 ```bash
-docker run -it --rm identinet/didkit-cli:0.3.2-1 help
+docker run -it --rm identinet/didkit-cli:0.3.2-2 help
 ```
 
 Make files from the local file system available to didkit by mounting them:
 
 ```bash
-docker run -it --rm -u "$(id -u):$(id -g)" -v "$PWD:/run/didkit" identinet/didkit-cli:0.3.2-1 key to did --key-path key.jwk
+docker run -it --rm -u "$(id -u):$(id -g)" -v "$PWD:/run/didkit" identinet/didkit-cli:0.3.2-2 key to did --key-path key.jwk
 ```
 
 ## Development

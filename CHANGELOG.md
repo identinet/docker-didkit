@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.2-2] - 2024-05-29
+
+### Documentation
+
+- [a6694ed] Correct version in docs
+
+### Miscellaneous Tasks
+
+- [b1e49b4] Update image labels
+
 ## [0.3.2-1] - 2024-05-28
 
 ### Added Features
