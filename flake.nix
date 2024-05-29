@@ -101,6 +101,7 @@
                 builtins.elemAt manifest.contributors 0;
               "org.opencontainers.image.url" = manifest.homepage;
               "org.opencontainers.image.source" = manifest.repository.url;
+              "org.opencontainers.image.revision" = manifest.version;
               # "org.opencontainers.image.base.name" =
               #   "${manifest.registry.url}/${manifest.name}/${manifest.version}";
             };
