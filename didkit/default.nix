@@ -5,9 +5,14 @@ pkgs.rustPlatform.buildRustPackage rec {
   pname = manifest.name;
   version = manifest.version;
   cargoLock.lockFile = ./Cargo.lock;
-  # src = ./.;
   src = pkgs.lib.cleanSource ./.;
-
+  nativeBuildInputs = with pkgs; [
+    rustc
+    rust-analyzer
+    cargo
+    clippy
+    rustfmt
+  ];
   meta = with pkgs.lib; {
     description = "Core library for Verifiable Credentials and Decentralized Identifiers.";
     homepage = "https://github.com/ideninet/didkit";

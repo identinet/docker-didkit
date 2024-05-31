@@ -35,13 +35,9 @@
             just
             skopeo
             deno
+            unstable.nushell
             # nodePackages.semver
-            # didkit_pkg
-            unstable.rustc
-            unstable.rust-analyzer
-            unstable.cargo
-            unstable.clippy
-            unstable.rustfmt
+            didkit_pkg.nativeBuildInputs
           ];
         };
 
