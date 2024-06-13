@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.2-5] - 2024-06-13
+
+### Miscellaneous Tasks
+
+- [b886f88](https://github.com/identinet/docker-didkit/commit/b886f88e33e5b9f45b1cdee907e74d2472ac655b) Update to nixos 24.05
+
 ## [0.3.2-3] - 2024-05-30
 
 ### Added Features
