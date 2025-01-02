@@ -1,6 +1,6 @@
 {
   "name": "didkit-cli",
-  "version": "0.3.2-6",
+  "version": "0.3.2-7",
   "description": "Docker image that packages DIDKit CLI",
   "author": "identinet GmbH <support@identinet.io>",
   "contributors": [
