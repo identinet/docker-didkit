@@ -21,7 +21,8 @@ githooks:
     #!/usr/bin/env nu
     $env.config = { use_ansi_coloring: false, error_style: "plain" }
     let hooks_folder = '.githooks'
-    if (do -i {git config core.hooksPath; or ""}) != $hooks_folder {
+    let git_hooks_folder = do {git config core.hooksPath} | complete
+    if $git_hooks_folder.exit_code == 0 and $git_hooks_folder.stdout != $hooks_folder {
       print -e 'Installing git commit hooks'
       git config core.hooksPath $hooks_folder
       # npm install -g @commitlint/config-conventional
