@@ -57,10 +57,18 @@ githooks:
       git add $hooks_folder
     }
 
+# Update dependencies
+update-deps:
+    cd ./didkit; cargo update
+
 # Update repository
-update:
+update-repo:
     git pull --rebase
     git submoule update --init --recursive
+
+# Update flake
+update-flake:
+    nix flake update
 
 # Build image
 build: githooks
@@ -105,10 +113,18 @@ inspect: build
       Name: $"($manifest.registry.name)/($manifest.name)",
       Digest: $"Refer to just inspect-registry after pushing the image",
     }
-    ./result | skopeo inspect --config docker-archive:/dev/stdin  | from json | merge $image
+    ./result | skopeo inspect --config docker-archive:/dev/stdin | from json | merge $image | table -e
+
+# Inspect image
+inspect-registry:
+    #!/usr/bin/env nu
+    let manifest = (open manifest.json)
+    let image = $"($manifest.registry.name)/($manifest.name)"
+    let data = skopeo inspect $"docker://($image):($manifest.version)" | from json
+    $data | merge { Image: $"($image):($manifest.version)@($data | get -i Digest)" } | table -e
 
 # Push image
-push:
+push: build
     #!/usr/bin/env nu
     let manifest = (open manifest.json)
     let image = $"($manifest.registry.name)/($manifest.name)"
