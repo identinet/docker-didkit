@@ -19,7 +19,7 @@
       let
         pkgs = nixpkgs.legacyPackages.${system};
         unstable = nixpkgs-unstable.legacyPackages.${system};
-        didkit_pkg = unstable.callPackage ./didkit/default.nix { };
+        default_pkg = unstable.callPackage ./didkit/default.nix { };
         manifest = pkgs.lib.importJSON ./manifest.json;
         pkgVersionsEqual =
           x: y:
@@ -35,7 +35,7 @@
             # Version can be bumped in the prerelease or build version to create a
             # custom local revision, see https://semver.org/
             abort "Version mismatch: ${y} doesn't start with ${x}";
-        version = pkgVersionsEqual didkit_pkg.version manifest.version;
+        version = pkgVersionsEqual default_pkg.version manifest.version;
       in
 
       rec {
@@ -43,14 +43,14 @@
         devShells.default = pkgs.mkShell {
           name = manifest.name;
           nativeBuildInputs = with pkgs; [
-            just
+            deno
             gh
             git-cliff
             just
             unstable.nushell
             unstable.skopeo
             openssl.dev
-            didkit_pkg.nativeBuildInputs
+            default_pkg.nativeBuildInputs
           ];
         };
 
@@ -85,7 +85,7 @@
             # curl
             # less
             # findutils
-            didkit_pkg
+            default_pkg
             # entrypoint
           ];
           enableFakechroot = true;
@@ -100,7 +100,7 @@
             # Valid values, see: https://github.com/moby/docker-image-spec
             # and https://oci-playground.github.io/specs-latest/
             ExposedPorts = { };
-            Entrypoint = [ "${didkit_pkg}/bin/didkit" ];
+            Entrypoint = [ "${default_pkg}/bin/didkit" ];
             Cmd = [ ];
             # Env = ["VARNAME=xxx"];
             WorkingDir = "/run/didkit";
