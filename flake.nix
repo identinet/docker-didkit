@@ -121,7 +121,7 @@
               "org.opencontainers.image.source" = manifest.repository.url;
               "org.opencontainers.image.revision" = manifest.version;
               # "org.opencontainers.image.base.name" =
-              #   "${manifest.registry.url}/${manifest.name}/${manifest.version}";
+              #   "${manifest.registry.name}/${manifest.name}/${manifest.version}";
             };
           };
         };
