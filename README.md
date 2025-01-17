@@ -11,13 +11,13 @@ Run the docker container with the following command and pass parameters to
 `didkit`:
 
 ```bash
-docker run -it --rm identinet/didkit-cli:0.3.2-7 help
+docker run -it --rm identinet/didkit-cli:0.3.2-8 help
 ```
 
 Make files from the local file system available to didkit by mounting them:
 
 ```bash
-docker run -it --rm -u "$(id -u):$(id -g)" -v "$PWD:/run/didkit" identinet/didkit-cli:0.3.2-7 key to did --key-path key.jwk
+docker run -it --rm -u "$(id -u):$(id -g)" -v "$PWD:/run/didkit" identinet/didkit-cli:0.3.2-8 key to did --key-path key.jwk
 ```
 
 ## Development

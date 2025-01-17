@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.2-8] - 2025-01-17
+
+### Bug Fixes
+
+- [db27372](https://github.com/identinet/docker-didkit/commit/db273722037686ee9ffe9bbc65c2df581ad029a7) Correct basename
+
+### Documentation
+
+- [c40f171](https://github.com/identinet/docker-didkit/commit/c40f171cdfac99e5522d7f10ab3de781e1e33241) Correct typo in git submodule command
+
+### Miscellaneous Tasks
+
+- [cd5fe2d](https://github.com/identinet/docker-didkit/commit/cd5fe2d4b7862479787a7750608b2da72cf73a48) Update build configuration
+
 ## [0.3.2-6] - 2025-01-01
 
 ### Miscellaneous Tasks
