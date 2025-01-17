@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.2-9] - 2025-01-17
+
+### Bug Fixes
+
+- [5d04517](https://github.com/identinet/docker-didkit/commit/5d04517b88916a8808ed18af675f22ff0f7fc3d5) Disable maxLayers configuration
+
 ## [0.3.2-8] - 2025-01-17
 
 ### Bug Fixes
