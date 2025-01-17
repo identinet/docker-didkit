@@ -81,9 +81,9 @@ build: githooks
         cd didkit/didkit
         cargo update
     }
-    # INFO: ?submodules=1 is required, see https://discourse.nixos.org/t/get-nix-flake-to-include-git-submodule/30324/3
+    # INFO: ?submodules=1# is required, see https://discourse.nixos.org/t/get-nix-flake-to-include-git-submodule/30324/3
     # Due to a bug, TMPDIR must be unset when running nix build inside a nix develop shell https://github.com/NixOS/nix/issues/10753
-    TMPDIR= nix build '.?submodules=1'
+    TMPDIR= nix build '.?submodules=1#'
 
 # Load image locally
 load: build
