@@ -1,4 +1,4 @@
-#!/usr/bin/env just --justfile
+#!/usr/bin/env -S just --justfile
 # Documentation: https://just.systems/man/en/
 # Documentation: https://www.nushell.sh/book/
 #
