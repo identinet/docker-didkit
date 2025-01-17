@@ -69,7 +69,7 @@
           tag = version;
           # created = "now";
           # author = "not yet supported";
-          maxLayers = 125;
+          # maxLayers = 125;
           contents = with pkgs; [
             dockerTools.usrBinEnv
             dockerTools.binSh
