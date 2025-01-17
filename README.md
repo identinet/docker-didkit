@@ -1,10 +1,14 @@
 # docker-didkit
 
-Provides a [docker image](https://hub.docker.com/repository/docker/identinet/didkit-cli) for the excellent Self-Sovereign Identity toolkit [didkit](https://github.com/spruceid/didkit).
+Provides a
+[docker image](https://hub.docker.com/repository/docker/identinet/didkit-cli)
+for the excellent Self-Sovereign Identity toolkit
+[didkit](https://github.com/spruceid/didkit).
 
 ## Usage
 
-Run the docker container with the following command and pass parameters to `didkit`:
+Run the docker container with the following command and pass parameters to
+`didkit`:
 
 ```bash
 docker run -it --rm identinet/didkit-cli:0.3.2-7 help
@@ -25,7 +29,7 @@ git clone git@github.com:identinet/docker-didkit.git
 
 # then, update submodules via
 
-git submoule update --init --recursive
+git submodule update --init --recursive
 
 # or
 
@@ -39,3 +43,4 @@ just update
 ```bash
 just build
 ```
+
