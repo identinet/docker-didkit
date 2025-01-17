@@ -102,7 +102,7 @@ run-sh: load
     #!/usr/bin/env nu
     let manifest = (open manifest.json)
     let image = $"($manifest.registry.name)/($manifest.name):($manifest.version)"
-    docker run --name $manifest.name -it --rm --entrypoint /bin/sh $image --
+    docker run --name $manifest.name -it --rm --entrypoint /bin/sh $image
 
 # Inspect image
 inspect: build
