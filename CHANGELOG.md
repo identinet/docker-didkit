@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.2-10] - 2025-01-29
+
+### Miscellaneous Tasks
+
+- [9dc24bf](https://github.com/identinet/docker-didkit/commit/9dc24bfcd0a1bba9bbfd64ffe86a52983df11011) Update didkit
+
 ## [0.3.2-9] - 2025-01-17
 
 ### Bug Fixes
