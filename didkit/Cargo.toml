@@ -1,7 +1,7 @@
 [workspace]
 members = [
   # From ./didkit/Cargo.toml
-  "didkit/http",
+  # "didkit/http",
   "didkit/cli",
   "didkit/lib",
   "didkit/lib/cbindings",
